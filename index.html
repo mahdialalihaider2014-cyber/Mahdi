@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>متجري الإلكتروني</title>
+
+    <!-- ربط ملف التصميم -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     الهيدر
+========================= -->
+
+<header class="header">
+
+    <div class="container header-inner">
+
+        <a class="logo" href="index.html">
+            🛍️ متجري
+        </a>
+
+
+        <nav class="nav">
+
+            <a href="#home">
+                الرئيسية
+            </a>
+
+            <a href="#categories">
+                الأقسام
+            </a>
+
+            <a href="#products">
+                المنتجات
+            </a>
+
+        </nav>
+
+
+        <button
+            class="cart-button"
+            onclick="openCart()">
+
+            🛒 السلة
+
+            <span id="cartCount">
+                0
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     الصفحة الرئيسية
+========================= -->
+
+<main id="home">
+
+
+    <!-- الواجهة الرئيسية -->
+
+    <section class="hero">
+
+        <div class="container hero-content">
+
+
+            <div>
+
+                <span class="badge">
+                    متجر إلكتروني
+                </span>
+
+
+                <h1>
+                    تسوق بسهولة واختر ما يناسبك
+                </h1>
+
+
+                <p>
+                    تصفح الأقسام والمنتجات،
+                    وابحث عن المنتج الذي تريده
+                    وأضفه إلى السلة.
+                </p>
+
+
+                <a
+                    class="hero-button"
+                    href="#products">
+
+                    تصفح المنتجات
+
+                </a>
+
+            </div>
+
+
+            <div class="hero-icon">
+                🛍️
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         الأقسام
+    ========================= -->
+
+    <section
+        id="categories"
+        class="section">
+
+        <div class="container">
+
+
+            <div class="section-title">
+
+                <h2>
+                    الأقسام
+                </h2>
+
+                <p>
+                    اختر القسم الذي تريد
+                    تصفح منتجاته
+                </p>
+
+            </div>
+
+
+            <div
+                id="categoriesList"
+                class="categories">
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         المنتجات
+    ========================= -->
+
+    <section
+        id="products"
+        class="section products-section">
+
+        <div class="container">
+
+
+            <div class="section-title">
+
+                <h2>
+                    المنتجات
+                </h2>
+
+                <p>
+                    يمكنك البحث أو اختيار
+                    قسم لعرض المنتجات
+                </p>
+
+            </div>
+
+
+
+            <!-- البحث والفلترة -->
+
+            <div class="tools">
+
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="🔎 ابحث عن منتج..."
+                    oninput="renderProducts()"
+                >
+
+
+                <select
+                    id="categoryFilter"
+                    onchange="renderProducts()">
+
+                    <option value="all">
+                        كل الأقسام
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+
+            <!-- المنتجات -->
+
+            <div
+                id="productsList"
+                class="products">
+            </div>
+
+
+            <div
+                id="noProducts"
+                class="no-products hidden">
+
+                لا توجد منتجات مطابقة للبحث.
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================
+     نافذة السلة
+========================= -->
+
+<div
+    id="cartOverlay"
+    class="overlay hidden"
+    onclick="closeCart(event)">
+
+
+    <aside
+        class="cart-panel"
+        onclick="event.stopPropagation()">
+
+
+        <div class="cart-header">
+
+            <h2>
+                🛒 سلة المشتريات
+            </h2>
+
+
+            <button
+                onclick="closeCart()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+
+        <div
+            id="cartItems"
+            class="cart-items">
+        </div>
+
+
+
+        <div class="cart-footer">
+
+
+            <div class="cart-total">
+
+                <span>
+                    الإجمالي
+                </span>
+
+
+                <strong>
+
+                    <span id="cartTotal">
+                        0
+                    </span>
+
+                    د.ع
+
+                </strong>
+
+            </div>
+
+
+
+            <button
+                class="checkout-button"
+                onclick="showCheckoutNotice()">
+
+                إتمام الطلب
+
+            </button>
+
+
+        </div>
+
+
+    </aside>
+
+</div>
+
+
+
+<!-- =========================
+     الفوتر
+========================= -->
+
+<footer class="footer">
+
+    <div class="container">
+
+        جميع الحقوق محفوظة © متجري
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+     ربط JavaScript
+========================= -->
+
+<script src="js/products.js"></script>
+
+
+</body>
+
+</html>
