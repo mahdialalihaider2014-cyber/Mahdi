@@ -1,14 +1,3 @@
-js
-└── products.js
-/*
-========================================
-المرحلة الأولى
-إدارة المنتجات والسلة
-والبحث والأقسام
-========================================
-*/
-
-
 /*
 ========================================
 المنتجات
@@ -19,105 +8,59 @@ const products = [
 
     {
         id: 1,
-
         name: "المنتج الأول",
-
         category: "البلاستيك",
-
         price: 10000,
-
         icon: "📦",
-
-        description:
-            "وصف مختصر للمنتج الأول."
+        description: "وصف مختصر للمنتج الأول."
     },
-
 
     {
         id: 2,
-
         name: "المنتج الثاني",
-
         category: "البلاستيك",
-
         price: 15000,
-
         icon: "🧴",
-
-        description:
-            "وصف مختصر للمنتج الثاني."
+        description: "وصف مختصر للمنتج الثاني."
     },
-
 
     {
         id: 3,
-
         name: "المنتج الثالث",
-
-        category:
-            "الأدوات المنزلية",
-
+        category: "الأدوات المنزلية",
         price: 20000,
-
         icon: "🏠",
-
-        description:
-            "وصف مختصر للمنتج الثالث."
+        description: "وصف مختصر للمنتج الثالث."
     },
-
 
     {
         id: 4,
-
         name: "المنتج الرابع",
-
-        category:
-            "الأدوات المنزلية",
-
+        category: "الأدوات المنزلية",
         price: 25000,
-
         icon: "🛠️",
-
-        description:
-            "وصف مختصر للمنتج الرابع."
+        description: "وصف مختصر للمنتج الرابع."
     },
-
 
     {
         id: 5,
-
         name: "المنتج الخامس",
-
-        category:
-            "منتجات جديدة",
-
+        category: "منتجات جديدة",
         price: 30000,
-
         icon: "⭐",
-
-        description:
-            "وصف مختصر للمنتج الخامس."
+        description: "وصف مختصر للمنتج الخامس."
     },
-
 
     {
         id: 6,
-
         name: "المنتج السادس",
-
-        category:
-            "منتجات جديدة",
-
+        category: "منتجات جديدة",
         price: 35000,
-
         icon: "🛒",
-
-        description:
-            "وصف مختصر للمنتج السادس."
+        description: "وصف مختصر للمنتج السادس."
     }
 
 ];
-
 
 
 /*
@@ -132,7 +75,6 @@ let cart =
     ) || [];
 
 
-
 /*
 ========================================
 تشغيل الموقع
@@ -143,42 +85,61 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        renderCategories();
+        /*
+        الصفحة الرئيسية
+        */
 
-        renderCategoryFilter();
+        if (
+            document.getElementById(
+                "productsList"
+            )
+        ) {
 
-        renderProducts();
+            renderCategories();
 
-        renderCart();
+            renderCategoryFilter();
+
+            renderProducts();
+
+        }
+
+
+        /*
+        السلة موجودة في الصفحتين
+        */
+
+        if (
+            document.getElementById(
+                "cartItems"
+            )
+        ) {
+
+            renderCart();
+
+        }
 
     }
 );
 
 
-
 /*
 ========================================
-الحصول على الأقسام
+الأقسام
 ========================================
 */
 
 function getCategories() {
 
     return [
-
         ...new Set(
-
             products.map(
                 product =>
                     product.category
             )
-
         )
-
     ];
 
 }
-
 
 
 /*
@@ -189,33 +150,28 @@ function getCategories() {
 
 function renderCategories() {
 
-
     const container =
         document.getElementById(
             "categoriesList"
         );
 
+    if (!container) return;
 
     container.innerHTML = "";
-
 
     const categories =
         getCategories();
 
-
     categories.forEach(
         function (category) {
-
 
             const card =
                 document.createElement(
                     "button"
                 );
 
-
             card.className =
                 "category-card";
-
 
             card.innerHTML = `
 
@@ -229,30 +185,37 @@ function renderCategories() {
 
             `;
 
-
             card.onclick =
                 function () {
 
+                    const filter =
+                        document.getElementById(
+                            "categoryFilter"
+                        );
 
-                    document.getElementById(
-                        "categoryFilter"
-                    ).value = category;
+                    if (filter) {
 
+                        filter.value =
+                            category;
 
-                    renderProducts();
+                        renderProducts();
 
+                    }
 
-                    document.getElementById(
-                        "products"
-                    ).scrollIntoView({
+                    const productsSection =
+                        document.getElementById(
+                            "products"
+                        );
 
-                        behavior:
-                            "smooth"
+                    if (productsSection) {
 
-                    });
+                        productsSection.scrollIntoView({
+                            behavior: "smooth"
+                        });
+
+                    }
 
                 };
-
 
             container.appendChild(card);
 
@@ -260,7 +223,6 @@ function renderCategories() {
     );
 
 }
-
 
 
 /*
@@ -271,30 +233,34 @@ function renderCategories() {
 
 function renderCategoryFilter() {
 
-
     const select =
         document.getElementById(
             "categoryFilter"
         );
 
+    if (!select) return;
+
+    select.innerHTML = `
+
+        <option value="all">
+            كل الأقسام
+        </option>
+
+    `;
 
     getCategories().forEach(
         function (category) {
-
 
             const option =
                 document.createElement(
                     "option"
                 );
 
-
             option.value =
                 category;
 
-
             option.textContent =
                 category;
-
 
             select.appendChild(option);
 
@@ -302,7 +268,6 @@ function renderCategoryFilter() {
     );
 
 }
-
 
 
 /*
@@ -313,52 +278,54 @@ function renderCategoryFilter() {
 
 function renderProducts() {
 
-
     const container =
         document.getElementById(
             "productsList"
         );
-
 
     const noProducts =
         document.getElementById(
             "noProducts"
         );
 
+    if (!container) return;
 
-    const search =
+    const searchInput =
         document.getElementById(
             "searchInput"
-        )
-        .value
-        .trim()
-        .toLowerCase();
+        );
 
-
-    const category =
+    const categoryFilter =
         document.getElementById(
             "categoryFilter"
-        )
-        .value;
+        );
 
+    const search =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
+
+    const category =
+        categoryFilter
+            ? categoryFilter.value
+            : "all";
 
 
     const filtered =
         products.filter(
             function (product) {
 
-
                 const matchesSearch =
                     product.name
                         .toLowerCase()
                         .includes(search);
 
-
                 const matchesCategory =
                     category === "all" ||
                     product.category ===
-                        category;
-
+                    category;
 
                 return (
                     matchesSearch &&
@@ -369,23 +336,39 @@ function renderProducts() {
         );
 
 
-
     container.innerHTML = "";
-
 
 
     filtered.forEach(
         function (product) {
-
 
             const card =
                 document.createElement(
                     "article"
                 );
 
-
             card.className =
                 "product-card";
+
+
+            /*
+            ========================================
+            الضغط على بطاقة المنتج يفتح التفاصيل
+            ========================================
+            */
+
+            card.style.cursor =
+                "pointer";
+
+
+            card.onclick =
+                function () {
+
+                    window.location.href =
+                        "product.html?id=" +
+                        product.id;
+
+                };
 
 
             card.innerHTML = `
@@ -399,7 +382,6 @@ function renderProducts() {
 
                 <div class="product-body">
 
-
                     <div class="product-category">
 
                         ${escapeHTML(
@@ -407,7 +389,6 @@ function renderProducts() {
                         )}
 
                     </div>
-
 
 
                     <h3 class="product-name">
@@ -419,16 +400,13 @@ function renderProducts() {
                     </h3>
 
 
-
-                    <div
-                        class="product-description">
+                    <div class="product-description">
 
                         ${escapeHTML(
                             product.description
                         )}
 
                     </div>
-
 
 
                     <div class="product-price">
@@ -442,16 +420,17 @@ function renderProducts() {
                     </div>
 
 
-
                     <button
                         class="add-button"
-                        onclick=
-                        "addToCart(${product.id})">
+                        onclick="
+                            event.stopPropagation();
+                            addToCart(${product.id});
+                        "
+                    >
 
                         🛒 إضافة إلى السلة
 
                     </button>
-
 
                 </div>
 
@@ -464,17 +443,16 @@ function renderProducts() {
     );
 
 
+    if (noProducts) {
 
-    noProducts.classList.toggle(
+        noProducts.classList.toggle(
+            "hidden",
+            filtered.length !== 0
+        );
 
-        "hidden",
-
-        filtered.length !== 0
-
-    );
+    }
 
 }
-
 
 
 /*
@@ -485,7 +463,6 @@ function renderProducts() {
 
 function addToCart(productId) {
 
-
     const product =
         products.find(
             item =>
@@ -493,12 +470,7 @@ function addToCart(productId) {
         );
 
 
-    if (!product) {
-
-        return;
-
-    }
-
+    if (!product) return;
 
 
     const existing =
@@ -506,7 +478,6 @@ function addToCart(productId) {
             item =>
                 item.id === productId
         );
-
 
 
     if (existing) {
@@ -536,17 +507,13 @@ function addToCart(productId) {
     }
 
 
-
     saveCart();
 
-
     renderCart();
-
 
     openCart();
 
 }
-
 
 
 /*
@@ -557,18 +524,15 @@ function addToCart(productId) {
 
 function renderCart() {
 
-
     const container =
         document.getElementById(
             "cartItems"
         );
 
-
     const count =
         document.getElementById(
             "cartCount"
         );
-
 
     const totalElement =
         document.getElementById(
@@ -576,10 +540,11 @@ function renderCart() {
         );
 
 
+    if (!container) return;
+
 
     const totalQuantity =
         cart.reduce(
-
             function (sum, item) {
 
                 return (
@@ -588,20 +553,19 @@ function renderCart() {
                 );
 
             },
-
             0
-
         );
 
 
+    if (count) {
 
-    count.textContent =
-        totalQuantity;
+        count.textContent =
+            totalQuantity;
 
+    }
 
 
     if (cart.length === 0) {
-
 
         container.innerHTML = `
 
@@ -614,26 +578,25 @@ function renderCart() {
         `;
 
 
-        totalElement.textContent =
-            "0";
+        if (totalElement) {
 
+            totalElement.textContent =
+                "0";
+
+        }
 
         return;
 
     }
 
 
-
     let total = 0;
-
 
     container.innerHTML = "";
 
 
-
     cart.forEach(
         function (item, index) {
-
 
             const itemTotal =
                 item.price *
@@ -643,22 +606,15 @@ function renderCart() {
             total += itemTotal;
 
 
-
             container.innerHTML += `
 
                 <div class="cart-item">
 
-
-                    <div
-                        class="cart-item-top">
-
+                    <div class="cart-item-top">
 
                         <div>
 
-
-                            <div
-                                class=
-                                "cart-item-name">
+                            <div class="cart-item-name">
 
                                 ${escapeHTML(
                                     item.name
@@ -666,10 +622,7 @@ function renderCart() {
 
                             </div>
 
-
-                            <div
-                                class=
-                                "cart-item-price">
+                            <div class="cart-item-price">
 
                                 ${formatNumber(
                                     item.price
@@ -678,7 +631,6 @@ function renderCart() {
                                 د.ع
 
                             </div>
-
 
                         </div>
 
@@ -693,29 +645,24 @@ function renderCart() {
 
                         </strong>
 
-
                     </div>
 
 
-
-                    <div
-                        class=
-                        "cart-item-actions">
-
+                    <div class="cart-item-actions">
 
                         <button
-                            class=
-                            "quantity-button"
-                            onclick=
-                            "changeQuantity(
-                                ${index},
-                                1
-                            )">
+                            class="quantity-button"
+                            onclick="
+                                changeQuantity(
+                                    ${index},
+                                    1
+                                )
+                            "
+                        >
 
                             +
 
                         </button>
-
 
 
                         <strong>
@@ -725,37 +672,35 @@ function renderCart() {
                         </strong>
 
 
-
                         <button
-                            class=
-                            "quantity-button"
-                            onclick=
-                            "changeQuantity(
-                                ${index},
-                                -1
-                            )">
+                            class="quantity-button"
+                            onclick="
+                                changeQuantity(
+                                    ${index},
+                                    -1
+                                )
+                            "
+                        >
 
                             −
 
                         </button>
 
 
-
                         <button
-                            class=
-                            "delete-button"
-                            onclick=
-                            "removeFromCart(
-                                ${index}
-                            )">
+                            class="delete-button"
+                            onclick="
+                                removeFromCart(
+                                    ${index}
+                                )
+                            "
+                        >
 
                             حذف
 
                         </button>
 
-
                     </div>
-
 
                 </div>
 
@@ -765,12 +710,14 @@ function renderCart() {
     );
 
 
+    if (totalElement) {
 
-    totalElement.textContent =
-        formatNumber(total);
+        totalElement.textContent =
+            formatNumber(total);
+
+    }
 
 }
-
 
 
 /*
@@ -784,17 +731,11 @@ function changeQuantity(
     change
 ) {
 
-
-    if (!cart[index]) {
-
-        return;
-
-    }
+    if (!cart[index]) return;
 
 
     cart[index].quantity +=
         change;
-
 
 
     if (
@@ -806,14 +747,11 @@ function changeQuantity(
     }
 
 
-
     saveCart();
-
 
     renderCart();
 
 }
-
 
 
 /*
@@ -824,12 +762,7 @@ function changeQuantity(
 
 function removeFromCart(index) {
 
-
-    if (!cart[index]) {
-
-        return;
-
-    }
+    if (!cart[index]) return;
 
 
     cart.splice(index, 1);
@@ -837,11 +770,9 @@ function removeFromCart(index) {
 
     saveCart();
 
-
     renderCart();
 
 }
-
 
 
 /*
@@ -853,15 +784,11 @@ function removeFromCart(index) {
 function saveCart() {
 
     localStorage.setItem(
-
         "cart",
-
         JSON.stringify(cart)
-
     );
 
 }
-
 
 
 /*
@@ -872,17 +799,19 @@ function saveCart() {
 
 function openCart() {
 
-
-    document
-        .getElementById(
+    const overlay =
+        document.getElementById(
             "cartOverlay"
-        )
-        .classList.remove(
-            "hidden"
         );
 
-}
+    if (!overlay) return;
 
+
+    overlay.classList.remove(
+        "hidden"
+    );
+
+}
 
 
 /*
@@ -893,64 +822,53 @@ function openCart() {
 
 function closeCart(event) {
 
+    const overlay =
+        document.getElementById(
+            "cartOverlay"
+        );
+
+    if (!overlay) return;
+
 
     if (
         !event ||
         event.target.id ===
-            "cartOverlay"
+        "cartOverlay"
     ) {
 
-
-        document
-            .getElementById(
-                "cartOverlay"
-            )
-            .classList.add(
-                "hidden"
-            );
+        overlay.classList.add(
+            "hidden"
+        );
 
     }
 
 }
-
 
 
 /*
 ========================================
 إتمام الطلب
 ========================================
-
-سنطوره في المرحلة الثالثة.
-========================================
 */
 
 function showCheckoutNotice() {
 
-
     if (cart.length === 0) {
-
 
         alert(
             "السلة فارغة."
         );
-
 
         return;
 
     }
 
 
-
     alert(
-
-        "السلة جاهزة. " +
-        "سنضيف صفحة إتمام الطلب " +
-        "في المرحلة الثالثة."
-
+        "السلة جاهزة. سنضيف إتمام الطلب في المرحلة القادمة."
     );
 
 }
-
 
 
 /*
@@ -961,12 +879,10 @@ function showCheckoutNotice() {
 
 function formatNumber(number) {
 
-
     return Number(number)
         .toLocaleString("en-US");
 
 }
-
 
 
 /*
@@ -976,7 +892,6 @@ function formatNumber(number) {
 */
 
 function escapeHTML(text) {
-
 
     return String(text)
 
