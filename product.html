@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>تفاصيل المنتج</title>
+
+    <!-- ملف التصميم -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     الهيدر
+========================= -->
+
+<header class="header">
+
+    <div class="container header-inner">
+
+        <a class="logo" href="index.html">
+            🛍️ متجري
+        </a>
+
+
+        <nav class="nav">
+
+            <a href="index.html">
+                الرئيسية
+            </a>
+
+            <a href="index.html#categories">
+                الأقسام
+            </a>
+
+            <a href="index.html#products">
+                المنتجات
+            </a>
+
+        </nav>
+
+
+        <button
+            class="cart-button"
+            onclick="openCart()">
+
+            🛒 السلة
+
+            <span id="cartCount">
+                0
+            </span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     تفاصيل المنتج
+========================= -->
+
+<main>
+
+    <section class="section">
+
+        <div class="container">
+
+
+            <!-- زر العودة -->
+
+            <a
+                href="index.html#products"
+                class="hero-button">
+
+                ← العودة إلى المنتجات
+
+            </a>
+
+
+
+            <!-- مكان تفاصيل المنتج -->
+
+            <div
+                id="productDetails"
+                style="margin-top:30px;">
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- =========================
+     نافذة السلة
+========================= -->
+
+<div
+    id="cartOverlay"
+    class="overlay hidden"
+    onclick="closeCart(event)">
+
+
+    <aside
+        class="cart-panel"
+        onclick="event.stopPropagation()">
+
+
+        <div class="cart-header">
+
+            <h2>
+                🛒 سلة المشتريات
+            </h2>
+
+
+            <button
+                onclick="closeCart()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+
+        <div
+            id="cartItems"
+            class="cart-items">
+        </div>
+
+
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+
+                <span>
+                    الإجمالي
+                </span>
+
+
+                <strong>
+
+                    <span id="cartTotal">
+                        0
+                    </span>
+
+                    د.ع
+
+                </strong>
+
+            </div>
+
+
+            <button
+                class="checkout-button"
+                onclick="showCheckoutNotice()">
+
+                إتمام الطلب
+
+            </button>
+
+        </div>
+
+
+    </aside>
+
+</div>
+
+
+
+<!-- =========================
+     JavaScript
+========================= -->
+
+<script src="js/products.js"></script>
+
+
+<script>
+
+/*
+========================================
+الحصول على رقم المنتج من الرابط
+مثال:
+
+product.html?id=1
+========================================
+*/
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const productId =
+    Number(
+        urlParams.get("id")
+    );
+
+
+
+/*
+========================================
+عرض تفاصيل المنتج
+========================================
+*/
+
+function showProductDetails() {
+
+
+    const container =
+        document.getElementById(
+            "productDetails"
+        );
+
+
+    const product =
+        products.find(
+            item =>
+                item.id === productId
+        );
+
+
+
+    /*
+    ================================
+    إذا لم نجد المنتج
+    ================================
+    */
+
+    if (!product) {
+
+        container.innerHTML = `
+
+            <div
+                style="
+                    background:white;
+                    padding:40px;
+                    border-radius:15px;
+                    text-align:center;
+                "
+            >
+
+                <h2>
+                    المنتج غير موجود
+                </h2>
+
+                <p>
+                    تأكد من أن رابط المنتج صحيح.
+                </p>
+
+                <a
+                    href="index.html#products"
+                    class="hero-button">
+
+                    العودة إلى المنتجات
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    /*
+    ================================
+    عرض المنتج
+    ================================
+    */
+
+    container.innerHTML = `
+
+        <div
+            style="
+                display:grid;
+                grid-template-columns:
+                    repeat(
+                        auto-fit,
+                        minmax(280px, 1fr)
+                    );
+                gap:30px;
+                background:white;
+                padding:25px;
+                border-radius:18px;
+                box-shadow:
+                    0 5px 20px
+                    rgba(0,0,0,.08);
+            "
+        >
+
+
+            <!-- صورة المنتج -->
+
+            <div
+                style="
+                    min-height:350px;
+                    background:#eef2f7;
+                    border-radius:15px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:120px;
+                "
+            >
+
+                ${product.icon}
+
+            </div>
+
+
+
+            <!-- معلومات المنتج -->
+
+            <div
+                style="
+                    display:flex;
+                    flex-direction:column;
+                    justify-content:center;
+                "
+            >
+
+
+                <div
+                    style="
+                        color:#16a34a;
+                        margin-bottom:10px;
+                    "
+                >
+
+                    ${escapeHTML(
+                        product.category
+                    )}
+
+                </div>
+
+
+
+                <h1
+                    style="
+                        margin:0 0 15px;
+                        font-size:32px;
+                    "
+                >
+
+                    ${escapeHTML(
+                        product.name
+                    )}
+
+                </h1>
+
+
+
+                <p
+                    style="
+                        color:#666;
+                        line-height:2;
+                        font-size:16px;
+                    "
+                >
+
+                    ${escapeHTML(
+                        product.description
+                    )}
+
+                </p>
+
+
+
+                <div
+                    style="
+                        font-size:28px;
+                        font-weight:800;
+                        margin:20px 0;
+                    "
+                >
+
+                    ${formatNumber(
+                        product.price
+                    )}
+
+                    د.ع
+
+                </div>
+
+
+
+                <!-- اختيار الكمية -->
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:12px;
+                        margin-bottom:20px;
+                    "
+                >
+
+                    <label
+                        for="productQuantity"
+                    >
+
+                        الكمية:
+
+                    </label>
+
+
+                    <input
+                        id="productQuantity"
+                        type="number"
+                        value="1"
+                        min="1"
+                        style="
+                            width:80px;
+                            padding:10px;
+                            border:
+                                1px solid #ddd;
+                            border-radius:8px;
+                        "
+                    >
+
+                </div>
+
+
+
+                <!-- زر الإضافة -->
+
+                <button
+                    onclick="
+                        addProductToCart(
+                            ${product.id}
+                        )
+                    "
+                    style="
+                        border:0;
+                        padding:15px;
+                        border-radius:10px;
+                        background:#16a34a;
+                        color:white;
+                        font-weight:800;
+                        font-size:17px;
+                        cursor:pointer;
+                    "
+                >
+
+                    🛒 إضافة إلى السلة
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/*
+========================================
+إضافة كمية المنتج المحددة للسلة
+========================================
+*/
+
+function addProductToCart(
+    id
+) {
+
+
+    const product =
+        products.find(
+            item =>
+                item.id === id
+        );
+
+
+    if (!product) {
+
+        return;
+
+    }
+
+
+    const quantityInput =
+        document.getElementById(
+            "productQuantity"
+        );
+
+
+    let quantity =
+        Number(
+            quantityInput.value
+        );
+
+
+    if (
+        !Number.isInteger(quantity) ||
+        quantity < 1
+    ) {
+
+        quantity = 1;
+
+    }
+
+
+
+    const existing =
+        cart.find(
+            item =>
+                item.id === id
+        );
+
+
+
+    if (existing) {
+
+        existing.quantity +=
+            quantity;
+
+    }
+
+    else {
+
+        cart.push({
+
+            id:
+                product.id,
+
+            name:
+                product.name,
+
+            price:
+                product.price,
+
+            quantity:
+                quantity
+
+        });
+
+    }
+
+
+
+    saveCart();
+
+    renderCart();
+
+    openCart();
+
+}
+
+
+
+/*
+========================================
+تشغيل صفحة المنتج
+========================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        showProductDetails();
+
+        renderCart();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
