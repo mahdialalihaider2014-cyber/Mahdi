@@ -10,8 +10,9 @@
 
     <title>تفاصيل المنتج</title>
 
-    <!-- ملف التصميم -->
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css">
 
 </head>
 
@@ -19,16 +20,16 @@
 <body>
 
 
-<!-- =========================
-     الهيدر
-========================= -->
-
 <header class="header">
 
     <div class="container header-inner">
 
-        <a class="logo" href="index.html">
+        <a
+            class="logo"
+            href="index.html">
+
             🛍️ متجري
+
         </a>
 
 
@@ -67,18 +68,12 @@
 
 
 
-<!-- =========================
-     تفاصيل المنتج
-========================= -->
-
 <main>
 
     <section class="section">
 
         <div class="container">
 
-
-            <!-- زر العودة -->
 
             <a
                 href="index.html#products"
@@ -88,9 +83,6 @@
 
             </a>
 
-
-
-            <!-- مكان تفاصيل المنتج -->
 
             <div
                 id="productDetails"
@@ -107,9 +99,9 @@
 
 
 
-<!-- =========================
-     نافذة السلة
-========================= -->
+<!-- =================================
+     السلة
+================================= -->
 
 <div
     id="cartOverlay"
@@ -139,12 +131,10 @@
         </div>
 
 
-
         <div
             id="cartItems"
             class="cart-items">
         </div>
-
 
 
         <div class="cart-footer">
@@ -179,16 +169,11 @@
 
         </div>
 
-
     </aside>
 
 </div>
 
 
-
-<!-- =========================
-     JavaScript
-========================= -->
 
 <script src="js/products.js"></script>
 
@@ -196,12 +181,9 @@
 <script>
 
 /*
-========================================
-الحصول على رقم المنتج من الرابط
-مثال:
-
-product.html?id=1
-========================================
+==================================================
+       قراءة رقم المنتج من الرابط
+==================================================
 */
 
 const urlParams =
@@ -216,15 +198,22 @@ const productId =
     );
 
 
+/*
+==================================================
+            كمية المنتج
+==================================================
+*/
+
+let detailQuantity = 1;
+
 
 /*
-========================================
-عرض تفاصيل المنتج
-========================================
+==================================================
+          عرض تفاصيل المنتج
+==================================================
 */
 
 function showProductDetails() {
-
 
     const container =
         document.getElementById(
@@ -234,17 +223,13 @@ function showProductDetails() {
 
     const product =
         products.find(
-            item =>
-                item.id === productId
+            function (item) {
+
+                return item.id === productId;
+
+            }
         );
 
-
-
-    /*
-    ================================
-    إذا لم نجد المنتج
-    ================================
-    */
 
     if (!product) {
 
@@ -263,9 +248,11 @@ function showProductDetails() {
                     المنتج غير موجود
                 </h2>
 
+
                 <p>
                     تأكد من أن رابط المنتج صحيح.
                 </p>
+
 
                 <a
                     href="index.html#products"
@@ -283,13 +270,6 @@ function showProductDetails() {
 
     }
 
-
-
-    /*
-    ================================
-    عرض المنتج
-    ================================
-    */
 
     container.innerHTML = `
 
@@ -331,7 +311,6 @@ function showProductDetails() {
             </div>
 
 
-
             <!-- معلومات المنتج -->
 
             <div
@@ -341,7 +320,6 @@ function showProductDetails() {
                     justify-content:center;
                 "
             >
-
 
                 <div
                     style="
@@ -355,7 +333,6 @@ function showProductDetails() {
                     )}
 
                 </div>
-
 
 
                 <h1
@@ -372,7 +349,6 @@ function showProductDetails() {
                 </h1>
 
 
-
                 <p
                     style="
                         color:#666;
@@ -386,7 +362,6 @@ function showProductDetails() {
                     )}
 
                 </p>
-
 
 
                 <div
@@ -406,53 +381,95 @@ function showProductDetails() {
                 </div>
 
 
-
-                <!-- اختيار الكمية -->
+                <!-- =================================
+                     أزرار الكمية
+                ================================== -->
 
                 <div
                     style="
                         display:flex;
                         align-items:center;
-                        gap:12px;
+                        gap:15px;
                         margin-bottom:20px;
                     "
                 >
 
-                    <label
-                        for="productQuantity"
-                    >
-
+                    <span>
                         الكمية:
+                    </span>
 
-                    </label>
 
+                    <button
+                        type="button"
+                        onclick="changeDetailQuantity(-1)"
 
-                    <input
-                        id="productQuantity"
-                        type="number"
-                        value="1"
-                        min="1"
                         style="
-                            width:80px;
-                            padding:10px;
-                            border:
-                                1px solid #ddd;
+                            width:42px;
+                            height:42px;
+                            border:0;
                             border-radius:8px;
+                            background:#e5e7eb;
+                            font-size:24px;
+                            font-weight:bold;
+                            cursor:pointer;
                         "
                     >
+
+                        −
+
+                    </button>
+
+
+                    <strong
+                        id="detailQuantity"
+                        style="
+                            min-width:35px;
+                            text-align:center;
+                            font-size:20px;
+                        "
+                    >
+
+                        1
+
+                    </strong>
+
+
+                    <button
+                        type="button"
+                        onclick="changeDetailQuantity(1)"
+
+                        style="
+                            width:42px;
+                            height:42px;
+                            border:0;
+                            border-radius:8px;
+                            background:#e5e7eb;
+                            font-size:24px;
+                            font-weight:bold;
+                            cursor:pointer;
+                        "
+                    >
+
+                        +
+
+                    </button>
 
                 </div>
 
 
-
-                <!-- زر الإضافة -->
+                <!-- =================================
+                     إضافة للسلة
+                ================================== -->
 
                 <button
+                    type="button"
+
                     onclick="
                         addProductToCart(
                             ${product.id}
                         )
                     "
+
                     style="
                         border:0;
                         padding:15px;
@@ -479,67 +496,81 @@ function showProductDetails() {
 }
 
 
+/*
+==================================================
+           تغيير كمية صفحة التفاصيل
+==================================================
+*/
+
+function changeDetailQuantity(
+    change
+) {
+
+    detailQuantity += change;
+
+
+    if (
+        detailQuantity < 1
+    ) {
+
+        detailQuantity = 1;
+
+    }
+
+
+    const element =
+        document.getElementById(
+            "detailQuantity"
+        );
+
+
+    if (element) {
+
+        element.textContent =
+            detailQuantity;
+
+    }
+
+}
+
 
 /*
-========================================
-إضافة كمية المنتج المحددة للسلة
-========================================
+==================================================
+       إضافة المنتج إلى السلة
+==================================================
 */
 
 function addProductToCart(
     id
 ) {
 
-
     const product =
         products.find(
-            item =>
-                item.id === id
+            function (item) {
+
+                return item.id === id;
+
+            }
         );
 
 
-    if (!product) {
-
-        return;
-
-    }
-
-
-    const quantityInput =
-        document.getElementById(
-            "productQuantity"
-        );
-
-
-    let quantity =
-        Number(
-            quantityInput.value
-        );
-
-
-    if (
-        !Number.isInteger(quantity) ||
-        quantity < 1
-    ) {
-
-        quantity = 1;
-
-    }
-
+    if (!product) return;
 
 
     const existing =
         cart.find(
-            item =>
-                item.id === id
-        );
+            function (item) {
 
+                return item.id === id;
+
+            }
+        );
 
 
     if (existing) {
 
         existing.quantity +=
-            quantity;
+            detailQuantity;
 
     }
 
@@ -557,28 +588,52 @@ function addProductToCart(
                 product.price,
 
             quantity:
-                quantity
+                detailQuantity
 
         });
 
     }
 
 
+    /*
+    إعادة الكمية إلى 1
+    */
+
+    detailQuantity = 1;
+
+
+    const element =
+        document.getElementById(
+            "detailQuantity"
+        );
+
+
+    if (element) {
+
+        element.textContent = "1";
+
+    }
+
 
     saveCart();
 
     renderCart();
 
-    openCart();
+
+    /*
+    ==========================================
+    مهم:
+    لا نفتح السلة بعد الإضافة
+    ==========================================
+    */
 
 }
 
 
-
 /*
-========================================
-تشغيل صفحة المنتج
-========================================
+==================================================
+             تشغيل صفحة التفاصيل
+==================================================
 */
 
 document.addEventListener(
