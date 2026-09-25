@@ -17,116 +17,173 @@
         }
 
         body {
+
             margin: 0;
-            font-family: Arial, sans-serif;
+
+            font-family:
+                Arial,
+                Tahoma,
+                sans-serif;
+
             background: #f5f5f5;
+
             color: #222;
         }
 
         .container {
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-        }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 25px;
+            max-width: 800px;
+
+            margin: 30px auto;
+
+            padding: 20px;
         }
 
         .box {
+
             background: white;
-            padding: 20px;
+
             border-radius: 12px;
+
+            padding: 20px;
+
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 2px 10px
+                rgba(0,0,0,0.08);
         }
 
-        .box h2 {
+        h1 {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        h2 {
+
             margin-top: 0;
-            font-size: 20px;
         }
 
         label {
+
             display: block;
+
             margin-top: 15px;
+
             margin-bottom: 6px;
+
             font-weight: bold;
         }
 
         input,
         textarea {
+
             width: 100%;
+
             padding: 12px;
+
             border: 1px solid #ddd;
+
             border-radius: 8px;
+
             font-size: 16px;
         }
 
         textarea {
+
             min-height: 90px;
+
             resize: vertical;
         }
 
         .product {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            gap: 10px;
+
             padding: 12px 0;
+
             border-bottom: 1px solid #eee;
         }
 
         .product:last-child {
+
             border-bottom: none;
         }
 
         .product-name {
+
             font-weight: bold;
         }
 
-        .product-info {
-            color: #666;
-            margin-top: 5px;
-            font-size: 14px;
+        .product-price {
+
+            color: #555;
+
+            white-space: nowrap;
         }
 
         .total {
+
             display: flex;
+
             justify-content: space-between;
+
             font-size: 20px;
+
             font-weight: bold;
+
             margin-top: 20px;
+
             padding-top: 15px;
+
             border-top: 2px solid #eee;
         }
 
-        .whatsapp-button {
+        button {
+
             width: 100%;
-            padding: 15px;
+
             border: none;
-            border-radius: 10px;
-            background: #25D366;
-            color: white;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
             font-size: 18px;
-            font-weight: bold;
+
             cursor: pointer;
+
+            margin-top: 15px;
         }
 
-        .whatsapp-button:hover {
-            opacity: 0.9;
+        .whatsapp-button {
+
+            background: #25D366;
+
+            color: white;
         }
 
         .back-button {
-            display: block;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-            text-decoration: none;
+
+            background: #555;
+
+            color: white;
         }
 
         .empty {
+
             text-align: center;
+
             padding: 30px;
+
             color: #777;
         }
 
@@ -140,73 +197,74 @@
 
 <div class="container">
 
-    <a href="index.html" class="back-button">
-        ← العودة إلى المتجر
-    </a>
 
-
-    <h1>إتمام الطلب</h1>
+    <h1>
+        إتمام الطلب
+    </h1>
 
 
     <!-- بيانات العميل -->
 
     <div class="box">
 
-        <h2>بيانات العميل</h2>
+        <h2>
+            بيانات العميل
+        </h2>
 
 
-        <label>
+        <label for="customerName">
             اسم العميل
         </label>
 
         <input
             type="text"
             id="customerName"
-            placeholder="اكتب اسمك"
-        >
+            placeholder="أدخل اسمك">
 
 
-        <label>
+        <label for="customerPhone">
             رقم الهاتف
         </label>
 
         <input
             type="tel"
             id="customerPhone"
-            placeholder="07XXXXXXXXX"
-        >
+            placeholder="أدخل رقم الهاتف">
 
 
-        <label>
+        <label for="customerAddress">
             العنوان
         </label>
 
-        <input
-            type="text"
+        <textarea
             id="customerAddress"
-            placeholder="المحافظة - المنطقة - العنوان"
-        >
+            placeholder="أدخل العنوان بالتفصيل"></textarea>
 
 
-        <label>
-            ملاحظات
+        <label for="customerNotes">
+            ملاحظات إضافية
         </label>
 
         <textarea
             id="customerNotes"
-            placeholder="أي ملاحظات إضافية..."
-        ></textarea>
+            placeholder="أي ملاحظات على الطلب"></textarea>
 
     </div>
+
 
 
     <!-- مراجعة الطلب -->
 
     <div class="box">
 
-        <h2>مراجعة الطلب</h2>
+        <h2>
+            مراجعة الطلب
+        </h2>
 
-        <div id="orderItems"></div>
+        <div id="orderItems">
+
+        </div>
+
 
         <div class="total">
 
@@ -223,18 +281,30 @@
     </div>
 
 
-    <!-- إرسال الطلب -->
+
+    <!-- الأزرار -->
 
     <div class="box">
 
         <button
             class="whatsapp-button"
-            onclick="sendOrderToWhatsApp()"
-        >
-            إرسال الطلب عبر واتساب
+            onclick="sendOrderToWhatsApp()">
+
+            📱 إرسال الطلب عبر واتساب
+
+        </button>
+
+
+        <button
+            class="back-button"
+            onclick="window.location.href='index.html'">
+
+            ← العودة للمتجر
+
         </button>
 
     </div>
+
 
 </div>
 
@@ -249,9 +319,10 @@
 ====================================
 */
 
-let cart = JSON.parse(
-    localStorage.getItem("cart")
-) || [];
+let cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
 
 
 
@@ -263,25 +334,29 @@ let cart = JSON.parse(
 
 function showOrder() {
 
-    const container =
-        document.getElementById("orderItems");
 
-    const totalElement =
-        document.getElementById("orderTotal");
+    const orderItems =
+        document.getElementById(
+            "orderItems"
+        );
 
 
-    container.innerHTML = "";
+    const orderTotal =
+        document.getElementById(
+            "orderTotal"
+        );
 
 
     if (cart.length === 0) {
 
-        container.innerHTML = `
+        orderItems.innerHTML = `
             <div class="empty">
                 السلة فارغة
             </div>
         `;
 
-        totalElement.textContent = "0 د.ع";
+        orderTotal.textContent =
+            "0 د.ع";
 
         return;
     }
@@ -290,13 +365,19 @@ function showOrder() {
     let total = 0;
 
 
+    let html = "";
+
+
     cart.forEach(function(item) {
+
+
+        const price =
+            Number(item.price) || 0;
+
 
         const quantity =
             Number(item.quantity) || 1;
 
-        const price =
-            Number(item.price) || 0;
 
         const lineTotal =
             price * quantity;
@@ -305,42 +386,44 @@ function showOrder() {
         total += lineTotal;
 
 
-        const product = document.createElement("div");
+        html += `
 
-        product.className = "product";
+            <div class="product">
 
+                <div>
 
-        product.innerHTML = `
+                    <div class="product-name">
+                        ${escapeHTML(item.name)}
+                    </div>
 
-            <div>
+                    <div>
+                        الكمية:
+                        ${quantity}
+                    </div>
 
-                <div class="product-name">
-                    ${escapeHTML(item.name)}
                 </div>
 
-                <div class="product-info">
-                    الكمية: ${quantity}
+
+                <div class="product-price">
+
+                    ${formatNumber(lineTotal)}
+                    د.ع
+
                 </div>
-
-            </div>
-
-
-            <div>
-
-                ${formatNumber(lineTotal)} د.ع
 
             </div>
 
         `;
-
-
-        container.appendChild(product);
-
     });
 
 
-    totalElement.textContent =
-        formatNumber(total) + " د.ع";
+    orderItems.innerHTML =
+        html;
+
+
+    orderTotal.textContent =
+        formatNumber(total) +
+        " د.ع";
 
 }
 
@@ -357,99 +440,110 @@ function sendOrderToWhatsApp() {
 
     if (cart.length === 0) {
 
-        alert("السلة فارغة.");
+        alert(
+            "السلة فارغة، أضف منتجات أولاً."
+        );
 
         return;
-
     }
 
 
-    const name =
-        document.getElementById("customerName").value.trim();
+    const customerName =
+        document
+        .getElementById(
+            "customerName"
+        )
+        .value
+        .trim();
 
 
-    const phone =
-        document.getElementById("customerPhone").value.trim();
+    const customerPhone =
+        document
+        .getElementById(
+            "customerPhone"
+        )
+        .value
+        .trim();
 
 
-    const address =
-        document.getElementById("customerAddress").value.trim();
+    const customerAddress =
+        document
+        .getElementById(
+            "customerAddress"
+        )
+        .value
+        .trim();
 
 
-    const notes =
-        document.getElementById("customerNotes").value.trim();
+    const customerNotes =
+        document
+        .getElementById(
+            "customerNotes"
+        )
+        .value
+        .trim();
 
 
-    if (!name) {
 
-        alert("يرجى كتابة اسم العميل.");
+    /*
+    ====================================
+    التحقق من البيانات
+    ====================================
+    */
+
+    if (!customerName) {
+
+        alert(
+            "يرجى إدخال اسم العميل."
+        );
 
         return;
-
     }
 
 
-    if (!phone) {
+    if (!customerPhone) {
 
-        alert("يرجى كتابة رقم الهاتف.");
+        alert(
+            "يرجى إدخال رقم الهاتف."
+        );
 
         return;
-
     }
 
 
-    if (!address) {
+    if (!customerAddress) {
 
-        alert("يرجى كتابة العنوان.");
+        alert(
+            "يرجى إدخال العنوان."
+        );
 
         return;
-
     }
 
+
+
+    /*
+    ====================================
+    حساب المجموع
+    ====================================
+    */
 
     let total = 0;
 
 
-    let message = "";
-
-
-
-    message += "🛒 *طلب جديد*";
-    message += "\n";
-    message += "━━━━━━━━━━━━━━";
-    message += "\n\n";
-
-
-    message += "👤 اسم العميل: ";
-    message += name;
-
-    message += "\n";
-
-
-    message += "📱 رقم الهاتف: ";
-    message += phone;
-
-    message += "\n";
-
-
-    message += "📍 العنوان: ";
-    message += address;
-
-    message += "\n\n";
-
-
-    message += "🛍️ *المنتجات:*";
-    message += "\n";
-
+    let productsMessage = "";
 
 
     cart.forEach(function(item) {
 
-        const quantity =
-            Number(item.quantity) || 1;
 
         const price =
             Number(item.price) || 0;
+
+
+        const quantity =
+            Number(item.quantity) || 1;
+
 
         const lineTotal =
             price * quantity;
@@ -458,37 +552,63 @@ function sendOrderToWhatsApp() {
         total += lineTotal;
 
 
-        message += "\n";
-
-        message += "• ";
-        message += item.name;
-
-        message += " × ";
-        message += quantity;
-
-        message += " = ";
-        message += formatNumber(lineTotal);
-        message += " د.ع";
+        productsMessage +=
+            "• " +
+            item.name +
+            " × " +
+            quantity +
+            " = " +
+            formatNumber(lineTotal) +
+            " د.ع\n";
 
     });
 
 
-    message += "\n\n";
 
-    message += "💰 *المجموع: ";
-    message += formatNumber(total);
-    message += " د.ع*";
+    /*
+    ====================================
+    إنشاء رسالة واتساب
+    ====================================
+    */
+
+    let message =
+
+        "🛒 *طلب جديد*\n" +
+
+        "━━━━━━━━━━━━━━\n\n" +
+
+        "👤 اسم العميل: " +
+        customerName +
+        "\n" +
+
+        "📱 رقم الهاتف: " +
+        customerPhone +
+        "\n" +
+
+        "📍 العنوان: " +
+        customerAddress +
+        "\n\n" +
+
+        "🛍️ *المنتجات:*\n" +
+
+        productsMessage +
+
+        "\n" +
+
+        "💰 *المجموع: " +
+        formatNumber(total) +
+        " د.ع*\n";
 
 
-    if (notes) {
 
-        message += "\n\n";
+    if (customerNotes) {
 
-        message += "📝 ملاحظات:";
-        message += "\n";
+        message +=
 
-        message += notes;
+            "\n📝 *ملاحظات:*\n" +
 
+            customerNotes +
+            "\n";
     }
 
 
@@ -498,25 +618,38 @@ function sendOrderToWhatsApp() {
     رقم واتساب المتجر
     ====================================
 
-    استبدل الرقم الموجود هنا
-    برقم واتساب المتجر لاحقاً.
+    الرقم:
+    07800653223
 
-    مثال:
-
-    9647XXXXXXXXX
-
+    صيغة واتساب الدولية للعراق:
+    9647800653223
     */
 
     const storeWhatsApp =
-        "9647XXXXXXXXX";
+        "9647800653223";
 
+
+
+    /*
+    ====================================
+    إنشاء رابط واتساب
+    ====================================
+    */
 
     const whatsappURL =
         "https://wa.me/" +
         storeWhatsApp +
         "?text=" +
-        encodeURIComponent(message);
+        encodeURIComponent(
+            message
+        );
 
+
+    /*
+    ====================================
+    فتح واتساب
+    ====================================
+    */
 
     window.open(
         whatsappURL,
@@ -535,7 +668,8 @@ function sendOrderToWhatsApp() {
 
 function formatNumber(number) {
 
-    return Number(number).toLocaleString("en-US");
+    return Number(number)
+        .toLocaleString("en-US");
 
 }
 
@@ -543,14 +677,16 @@ function formatNumber(number) {
 
 /*
 ====================================
-حماية النصوص
+حماية النص من HTML
 ====================================
 */
 
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     div.textContent =
         text ?? "";
