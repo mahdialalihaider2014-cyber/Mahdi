@@ -10,7 +10,6 @@
 
     <title>متجري الإلكتروني</title>
 
-    <!-- ربط ملف التصميم -->
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -26,6 +25,7 @@
 <header class="header">
 
     <div class="container header-inner">
+
 
         <a class="logo" href="index.html">
             🛍️ متجري
@@ -49,17 +49,43 @@
         </nav>
 
 
-        <button
-            class="cart-button"
-            onclick="openCart()">
+        <!-- =========================
+             أزرار السلة وإرسال الطلب
+        ========================= -->
 
-            🛒 السلة
+        <div class="header-buttons">
 
-            <span id="cartCount">
-                0
-            </span>
 
-        </button>
+            <!-- زر السلة -->
+
+            <button
+                type="button"
+                class="cart-button"
+                onclick="openCart()">
+
+                🛒 السلة
+
+                <span id="cartCount">
+                    0
+                </span>
+
+            </button>
+
+
+            <!-- زر إرسال الطلب -->
+
+            <button
+                type="button"
+                class="send-order-button"
+                onclick="goToCheckout()">
+
+                📱 إرسال الطلب
+
+            </button>
+
+
+        </div>
+
 
     </div>
 
@@ -74,7 +100,9 @@
 <main id="home">
 
 
-    <!-- الواجهة الرئيسية -->
+    <!-- =========================
+         الواجهة الرئيسية
+    ========================= -->
 
     <section class="hero">
 
@@ -184,7 +212,6 @@
             </div>
 
 
-
             <!-- البحث والفلترة -->
 
             <div class="tools">
@@ -262,6 +289,7 @@
 
 
             <button
+                type="button"
                 onclick="closeCart()">
 
                 ✕
@@ -303,15 +331,14 @@
 
 
 
-            <!-- =========================
-                 زر إتمام الطلب
-            ========================= -->
+            <!-- إتمام الطلب من داخل السلة -->
 
             <button
+                type="button"
                 class="checkout-button"
-                onclick="window.location.href='checkout.html'">
+                onclick="goToCheckout()">
 
-                إتمام الطلب
+                📱 إتمام الطلب
 
             </button>
 
@@ -342,7 +369,7 @@
 
 
 <!-- =========================
-     ربط JavaScript
+     JavaScript
 ========================= -->
 
 <script src="js/products.js"></script>
