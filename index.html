@@ -5,12 +5,17 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>متجري الإلكتروني</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
 </head>
 
@@ -27,7 +32,10 @@
     <div class="container header-inner">
 
 
-        <a class="logo" href="index.html">
+        <a
+            class="logo"
+            href="index.html"
+        >
             🛍️ متجري
         </a>
 
@@ -50,18 +58,19 @@
 
 
         <!-- =========================
-             أزرار السلة وإرسال الطلب
+             أزرار الهيدر
         ========================= -->
 
         <div class="header-buttons">
 
 
-            <!-- زر السلة -->
+            <!-- السلة -->
 
             <button
                 type="button"
                 class="cart-button"
-                onclick="openCart()">
+                onclick="openCart()"
+            >
 
                 🛒 السلة
 
@@ -72,20 +81,19 @@
             </button>
 
 
-            <!-- زر إرسال الطلب -->
+            <!-- إرسال الطلب -->
 
-            <button
-                type="button"
+            <a
                 class="send-order-button"
-                onclick="goToCheckout()">
+                href="checkout.html"
+            >
 
                 📱 إرسال الطلب
 
-            </button>
+            </a>
 
 
         </div>
-
 
     </div>
 
@@ -100,9 +108,7 @@
 <main id="home">
 
 
-    <!-- =========================
-         الواجهة الرئيسية
-    ========================= -->
+    <!-- الواجهة -->
 
     <section class="hero">
 
@@ -130,7 +136,8 @@
 
                 <a
                     class="hero-button"
-                    href="#products">
+                    href="#products"
+                >
 
                     تصفح المنتجات
 
@@ -156,7 +163,8 @@
 
     <section
         id="categories"
-        class="section">
+        class="section"
+    >
 
         <div class="container">
 
@@ -168,8 +176,7 @@
                 </h2>
 
                 <p>
-                    اختر القسم الذي تريد
-                    تصفح منتجاته
+                    اختر القسم الذي تريد تصفح منتجاته
                 </p>
 
             </div>
@@ -177,7 +184,8 @@
 
             <div
                 id="categoriesList"
-                class="categories">
+                class="categories"
+            >
             </div>
 
 
@@ -193,7 +201,8 @@
 
     <section
         id="products"
-        class="section products-section">
+        class="section products-section"
+    >
 
         <div class="container">
 
@@ -205,14 +214,13 @@
                 </h2>
 
                 <p>
-                    يمكنك البحث أو اختيار
-                    قسم لعرض المنتجات
+                    يمكنك البحث أو اختيار قسم لعرض المنتجات
                 </p>
 
             </div>
 
 
-            <!-- البحث والفلترة -->
+            <!-- البحث -->
 
             <div class="tools">
 
@@ -227,7 +235,8 @@
 
                 <select
                     id="categoryFilter"
-                    onchange="renderProducts()">
+                    onchange="renderProducts()"
+                >
 
                     <option value="all">
                         كل الأقسام
@@ -244,13 +253,15 @@
 
             <div
                 id="productsList"
-                class="products">
+                class="products"
+            >
             </div>
 
 
             <div
                 id="noProducts"
-                class="no-products hidden">
+                class="no-products hidden"
+            >
 
                 لا توجد منتجات مطابقة للبحث.
 
@@ -273,12 +284,14 @@
 <div
     id="cartOverlay"
     class="overlay hidden"
-    onclick="closeCart(event)">
+    onclick="closeCart(event)"
+>
 
 
     <aside
         class="cart-panel"
-        onclick="event.stopPropagation()">
+        onclick="event.stopPropagation()"
+    >
 
 
         <div class="cart-header">
@@ -290,7 +303,8 @@
 
             <button
                 type="button"
-                onclick="closeCart()">
+                onclick="closeCart()"
+            >
 
                 ✕
 
@@ -302,7 +316,8 @@
 
         <div
             id="cartItems"
-            class="cart-items">
+            class="cart-items"
+        >
         </div>
 
 
@@ -330,17 +345,16 @@
             </div>
 
 
+            <!-- زر إتمام الطلب -->
 
-            <!-- إتمام الطلب من داخل السلة -->
-
-            <button
-                type="button"
+            <a
                 class="checkout-button"
-                onclick="goToCheckout()">
+                href="checkout.html"
+            >
 
                 📱 إتمام الطلب
 
-            </button>
+            </a>
 
 
         </div>
