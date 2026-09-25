@@ -1,4 +1,9 @@
+/* ========================================
+   المنتجات
+======================================== */
+
 const products = [
+
     {
         id: 1,
         name: "المنتج الأول",
@@ -7,6 +12,7 @@ const products = [
         icon: "📦",
         description: "وصف مختصر للمنتج الأول."
     },
+
     {
         id: 2,
         name: "المنتج الثاني",
@@ -15,6 +21,7 @@ const products = [
         icon: "🧴",
         description: "وصف مختصر للمنتج الثاني."
     },
+
     {
         id: 3,
         name: "المنتج الثالث",
@@ -23,6 +30,7 @@ const products = [
         icon: "🏠",
         description: "وصف مختصر للمنتج الثالث."
     },
+
     {
         id: 4,
         name: "المنتج الرابع",
@@ -31,6 +39,7 @@ const products = [
         icon: "🛠️",
         description: "وصف مختصر للمنتج الرابع."
     },
+
     {
         id: 5,
         name: "المنتج الخامس",
@@ -39,6 +48,7 @@ const products = [
         icon: "⭐",
         description: "وصف مختصر للمنتج الخامس."
     },
+
     {
         id: 6,
         name: "المنتج السادس",
@@ -47,162 +57,254 @@ const products = [
         icon: "🛒",
         description: "وصف مختصر للمنتج السادس."
     }
+
 ];
 
 
-/* =========================
+
+/* ========================================
    السلة
-========================= */
+======================================== */
 
 let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
 
 
-/* =========================
+
+/* ========================================
    كميات المنتجات
-========================= */
+======================================== */
 
 const productQuantities = {};
 
 
-/* =========================
+
+/* ========================================
    تشغيل الصفحة
-========================= */
+======================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    if (document.getElementById("productsList")) {
+        if (
+            document.getElementById(
+                "productsList"
+            )
+        ) {
 
-        renderCategories();
-        renderCategoryFilter();
-        renderProducts();
+            renderCategories();
+
+            renderCategoryFilter();
+
+            renderProducts();
+
+        }
+
+        renderCart();
 
     }
-
-    renderCart();
-
-});
+);
 
 
-/* =========================
+
+/* ========================================
    الأقسام
-========================= */
+======================================== */
 
 function getCategories() {
 
-    return [...new Set(
-        products.map(product => product.category)
-    )];
+    return [
+        ...new Set(
+            products.map(
+                product =>
+                    product.category
+            )
+        )
+    ];
 
 }
+
 
 
 function renderCategories() {
 
     const container =
-        document.getElementById("categoriesList");
+        document.getElementById(
+            "categoriesList"
+        );
+
 
     if (!container) return;
 
+
     container.innerHTML = "";
 
-    getCategories().forEach(category => {
 
-        const button =
-            document.createElement("button");
+    getCategories().forEach(
+        function (category) {
 
-        button.type = "button";
-        button.className = "category-card";
 
-        button.innerHTML = `
-            <div class="category-icon">📦</div>
-            <strong>${escapeHTML(category)}</strong>
-        `;
+            const button =
+                document.createElement(
+                    "button"
+                );
 
-        button.addEventListener("click", function () {
 
-            const filter =
-                document.getElementById("categoryFilter");
+            button.type = "button";
 
-            if (filter) {
+            button.className =
+                "category-card";
 
-                filter.value = category;
-                renderProducts();
 
-            }
+            button.innerHTML = `
 
-            const section =
-                document.getElementById("products");
+                <div class="category-icon">
+                    📦
+                </div>
 
-            if (section) {
+                <strong>
+                    ${escapeHTML(category)}
+                </strong>
 
-                section.scrollIntoView({
-                    behavior: "smooth"
-                });
+            `;
 
-            }
 
-        });
+            button.addEventListener(
+                "click",
+                function () {
 
-        container.appendChild(button);
 
-    });
+                    const filter =
+                        document.getElementById(
+                            "categoryFilter"
+                        );
+
+
+                    if (filter) {
+
+                        filter.value =
+                            category;
+
+                        renderProducts();
+
+                    }
+
+
+                    const section =
+                        document.getElementById(
+                            "products"
+                        );
+
+
+                    if (section) {
+
+                        section.scrollIntoView({
+                            behavior:
+                                "smooth"
+                        });
+
+                    }
+
+                }
+            );
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
 
 }
 
 
-/* =========================
+
+/* ========================================
    فلتر الأقسام
-========================= */
+======================================== */
 
 function renderCategoryFilter() {
 
     const select =
-        document.getElementById("categoryFilter");
+        document.getElementById(
+            "categoryFilter"
+        );
+
 
     if (!select) return;
 
+
     select.innerHTML = `
-        <option value="all">كل الأقسام</option>
+        <option value="all">
+            كل الأقسام
+        </option>
     `;
 
-    getCategories().forEach(category => {
 
-        const option =
-            document.createElement("option");
+    getCategories().forEach(
+        function (category) {
 
-        option.value = category;
-        option.textContent = category;
 
-        select.appendChild(option);
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-    });
+
+            option.value =
+                category;
+
+            option.textContent =
+                category;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
 
 }
 
 
-/* =========================
+
+/* ========================================
    عرض المنتجات
-========================= */
+======================================== */
 
 function renderProducts() {
 
     const container =
-        document.getElementById("productsList");
+        document.getElementById(
+            "productsList"
+        );
+
 
     if (!container) return;
 
 
     const searchInput =
-        document.getElementById("searchInput");
+        document.getElementById(
+            "searchInput"
+        );
+
 
     const categoryFilter =
-        document.getElementById("categoryFilter");
+        document.getElementById(
+            "categoryFilter"
+        );
 
 
     const search =
         searchInput
-            ? searchInput.value.trim().toLowerCase()
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
             : "";
 
 
@@ -213,334 +315,439 @@ function renderProducts() {
 
 
     const filtered =
-        products.filter(product => {
+        products.filter(
+            function (product) {
 
-            const nameMatch =
-                product.name.toLowerCase().includes(search);
 
-            const categoryMatch =
-                category === "all" ||
-                product.category === category;
+                const nameMatch =
+                    product.name
+                        .toLowerCase()
+                        .includes(search);
 
-            return nameMatch && categoryMatch;
 
-        });
+                const categoryMatch =
+                    category === "all" ||
+                    product.category ===
+                        category;
+
+
+                return (
+                    nameMatch &&
+                    categoryMatch
+                );
+
+            }
+        );
 
 
     container.innerHTML = "";
 
 
-    filtered.forEach(product => {
+    const noProducts =
+        document.getElementById(
+            "noProducts"
+        );
 
-        if (!productQuantities[product.id]) {
 
-            productQuantities[product.id] = 1;
+    if (
+        noProducts
+    ) {
+
+        if (filtered.length === 0) {
+
+            noProducts.classList.remove(
+                "hidden"
+            );
+
+        } else {
+
+            noProducts.classList.add(
+                "hidden"
+            );
 
         }
 
-
-        const card =
-            document.createElement("article");
-
-        card.className = "product-card";
+    }
 
 
-        /*
-        ========================================
-        محتوى البطاقة
-        ========================================
-        */
-
-        card.innerHTML = `
-
-            <div class="product-image">
-                ${product.icon}
-            </div>
-
-            <div class="product-body">
-
-                <div class="product-category">
-                    ${escapeHTML(product.category)}
-                </div>
-
-                <h3 class="product-name">
-                    ${escapeHTML(product.name)}
-                </h3>
-
-                <div class="product-description">
-                    ${escapeHTML(product.description)}
-                </div>
-
-                <div class="product-price">
-                    ${formatNumber(product.price)} د.ع
-                </div>
+    filtered.forEach(
+        function (product) {
 
 
-                <!-- التحكم بالكمية -->
+            if (
+                !productQuantities[
+                    product.id
+                ]
+            ) {
 
-                <div
-                    class="product-quantity-controls"
-                    style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        gap:14px;
-                        margin:15px 0;
-                    "
-                >
-
-                    <button
-                        type="button"
-                        class="product-minus-button"
-                        data-action="minus"
-                        style="
-                            width:42px;
-                            height:42px;
-                            border:0;
-                            border-radius:8px;
-                            background:#e5e7eb;
-                            font-size:24px;
-                            font-weight:bold;
-                            cursor:pointer;
-                        "
-                    >
-                        −
-                    </button>
-
-
-                    <strong
-                        id="productQuantity-${product.id}"
-                        style="
-                            min-width:35px;
-                            text-align:center;
-                            font-size:19px;
-                        "
-                    >
-                        ${productQuantities[product.id]}
-                    </strong>
-
-
-                    <button
-                        type="button"
-                        class="product-plus-button"
-                        data-action="plus"
-                        style="
-                            width:42px;
-                            height:42px;
-                            border:0;
-                            border-radius:8px;
-                            background:#e5e7eb;
-                            font-size:24px;
-                            font-weight:bold;
-                            cursor:pointer;
-                        "
-                    >
-                        +
-                    </button>
-
-                </div>
-
-
-                <!-- إضافة للسلة -->
-
-                <button
-                    type="button"
-                    class="add-button"
-                    data-action="add"
-                >
-                    🛒 إضافة إلى السلة
-                </button>
-
-            </div>
-        `;
-
-
-        /*
-        ========================================
-        زر ناقص
-        ========================================
-        */
-
-        const minus =
-            card.querySelector(
-                '[data-action="minus"]'
-            );
-
-        minus.addEventListener("click", function (event) {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            changeProductQuantity(
-                product.id,
-                -1
-            );
-
-        });
-
-
-        /*
-        ========================================
-        زر زائد
-        ========================================
-        */
-
-        const plus =
-            card.querySelector(
-                '[data-action="plus"]'
-            );
-
-        plus.addEventListener("click", function (event) {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            changeProductQuantity(
-                product.id,
-                1
-            );
-
-        });
-
-
-        /*
-        ========================================
-        زر إضافة إلى السلة
-        ========================================
-        */
-
-        const add =
-            card.querySelector(
-                '[data-action="add"]'
-            );
-
-        add.addEventListener("click", function (event) {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            addSelectedQuantityToCart(
-                product.id
-            );
-
-        });
-
-
-        /*
-        ========================================
-        الضغط على البطاقة
-        ========================================
-        */
-
-        card.addEventListener("click", function (event) {
-
-            /*
-            إذا كان الضغط على أي زر
-            لا تفتح صفحة المنتج
-            */
-
-            if (event.target.closest("button")) {
-
-                return;
+                productQuantities[
+                    product.id
+                ] = 1;
 
             }
 
 
-            /*
-            فتح تفاصيل المنتج
-            */
-
-            window.location.href =
-                "product.html?id=" + product.id;
-
-        });
+            const card =
+                document.createElement(
+                    "article"
+                );
 
 
-        container.appendChild(card);
+            card.className =
+                "product-card";
 
-    });
+
+            card.innerHTML = `
+
+                <div class="product-image">
+                    ${product.icon}
+                </div>
+
+
+                <div class="product-body">
+
+
+                    <div class="product-category">
+                        ${escapeHTML(
+                            product.category
+                        )}
+                    </div>
+
+
+                    <h3 class="product-name">
+                        ${escapeHTML(
+                            product.name
+                        )}
+                    </h3>
+
+
+                    <div class="product-description">
+                        ${escapeHTML(
+                            product.description
+                        )}
+                    </div>
+
+
+                    <div class="product-price">
+                        ${formatNumber(
+                            product.price
+                        )}
+                        د.ع
+                    </div>
+
+
+                    <!-- التحكم بالكمية -->
+
+                    <div
+                        class="product-quantity-controls"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            gap:14px;
+                            margin:15px 0;
+                        "
+                    >
+
+
+                        <button
+                            type="button"
+                            class="product-minus-button"
+                            data-action="minus"
+                            style="
+                                width:42px;
+                                height:42px;
+                                border:0;
+                                border-radius:8px;
+                                background:#e5e7eb;
+                                font-size:24px;
+                                font-weight:bold;
+                                cursor:pointer;
+                            "
+                        >
+                            −
+                        </button>
+
+
+                        <strong
+                            id="productQuantity-${product.id}"
+                            style="
+                                min-width:35px;
+                                text-align:center;
+                                font-size:19px;
+                            "
+                        >
+                            ${
+                                productQuantities[
+                                    product.id
+                                ]
+                            }
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="product-plus-button"
+                            data-action="plus"
+                            style="
+                                width:42px;
+                                height:42px;
+                                border:0;
+                                border-radius:8px;
+                                background:#e5e7eb;
+                                font-size:24px;
+                                font-weight:bold;
+                                cursor:pointer;
+                            "
+                        >
+                            +
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- إضافة -->
+
+                    <button
+                        type="button"
+                        class="add-button"
+                        data-action="add"
+                    >
+
+                        🛒 إضافة إلى السلة
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+
+
+            /* زر ناقص */
+
+            const minus =
+                card.querySelector(
+                    '[data-action="minus"]'
+                );
+
+
+            minus.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    changeProductQuantity(
+                        product.id,
+                        -1
+                    );
+
+                }
+            );
+
+
+
+            /* زر زائد */
+
+            const plus =
+                card.querySelector(
+                    '[data-action="plus"]'
+                );
+
+
+            plus.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    changeProductQuantity(
+                        product.id,
+                        1
+                    );
+
+                }
+            );
+
+
+
+            /* زر الإضافة */
+
+            const add =
+                card.querySelector(
+                    '[data-action="add"]'
+                );
+
+
+            add.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+                    addSelectedQuantityToCart(
+                        product.id
+                    );
+
+                }
+            );
+
+
+
+            /* فتح المنتج */
+
+            card.addEventListener(
+                "click",
+                function (event) {
+
+
+                    if (
+                        event.target.closest(
+                            "button"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    window.location.href =
+                        "product.html?id=" +
+                        product.id;
+
+                }
+            );
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
 
 
-/* =========================
+
+/* ========================================
    تغيير كمية المنتج
-========================= */
+======================================== */
 
-function changeProductQuantity(productId, change) {
+function changeProductQuantity(
+    productId,
+    change
+) {
 
-    if (!productQuantities[productId]) {
+    if (
+        !productQuantities[
+            productId
+        ]
+    ) {
 
-        productQuantities[productId] = 1;
+        productQuantities[
+            productId
+        ] = 1;
 
     }
 
 
-    productQuantities[productId] += change;
+    productQuantities[
+        productId
+    ] += change;
 
 
-    if (productQuantities[productId] < 1) {
+    if (
+        productQuantities[
+            productId
+        ] < 1
+    ) {
 
-        productQuantities[productId] = 1;
+        productQuantities[
+            productId
+        ] = 1;
 
     }
 
-
-    /*
-    تحديث الرقم مباشرة
-    */
 
     const quantityElement =
         document.getElementById(
-            "productQuantity-" + productId
+            "productQuantity-" +
+            productId
         );
 
 
     if (quantityElement) {
 
         quantityElement.textContent =
-            productQuantities[productId];
+            productQuantities[
+                productId
+            ];
 
     }
 
 }
 
 
-/* =========================
-   إضافة الكمية للسلة
-========================= */
 
-function addSelectedQuantityToCart(productId) {
+/* ========================================
+   إضافة الكمية للسلة
+======================================== */
+
+function addSelectedQuantityToCart(
+    productId
+) {
 
     const product =
         products.find(
-            item => item.id === productId
+            item =>
+                item.id ===
+                productId
         );
+
 
     if (!product) return;
 
 
     const quantity =
-        productQuantities[productId] || 1;
+        productQuantities[
+            productId
+        ] || 1;
 
 
     const existing =
         cart.find(
-            item => item.id === productId
+            item =>
+                item.id ===
+                productId
         );
 
 
     if (existing) {
 
-        existing.quantity += quantity;
+        existing.quantity +=
+            quantity;
 
     } else {
 
         cart.push({
 
             id: product.id,
+
             name: product.name,
+
             price: product.price,
+
             quantity: quantity
 
         });
@@ -548,22 +755,22 @@ function addSelectedQuantityToCart(productId) {
     }
 
 
-    /*
-    إعادة الكمية إلى 1
-    */
-
-    productQuantities[productId] = 1;
+    productQuantities[
+        productId
+    ] = 1;
 
 
     const quantityElement =
         document.getElementById(
-            "productQuantity-" + productId
+            "productQuantity-" +
+            productId
         );
 
 
     if (quantityElement) {
 
-        quantityElement.textContent = "1";
+        quantityElement.textContent =
+            "1";
 
     }
 
@@ -575,65 +782,43 @@ function addSelectedQuantityToCart(productId) {
 }
 
 
-/* =========================
+
+/* ========================================
    إضافة قطعة واحدة
-========================= */
+======================================== */
 
 function addToCart(productId) {
 
-    const product =
-        products.find(
-            item => item.id === productId
-        );
-
-    if (!product) return;
-
-
-    const existing =
-        cart.find(
-            item => item.id === productId
-        );
-
-
-    if (existing) {
-
-        existing.quantity++;
-
-    } else {
-
-        cart.push({
-
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: 1
-
-        });
-
-    }
-
-
-    saveCart();
-
-    renderCart();
+    addSelectedQuantityToCart(
+        productId
+    );
 
 }
 
 
-/* =========================
+
+/* ========================================
    عرض السلة
-========================= */
+======================================== */
 
 function renderCart() {
 
     const container =
-        document.getElementById("cartItems");
+        document.getElementById(
+            "cartItems"
+        );
+
 
     const count =
-        document.getElementById("cartCount");
+        document.getElementById(
+            "cartCount"
+        );
+
 
     const totalElement =
-        document.getElementById("cartTotal");
+        document.getElementById(
+            "cartTotal"
+        );
 
 
     if (!container) return;
@@ -641,8 +826,16 @@ function renderCart() {
 
     const totalQuantity =
         cart.reduce(
-            (sum, item) =>
-                sum + item.quantity,
+            function (sum, item) {
+
+                return (
+                    sum +
+                    Number(
+                        item.quantity
+                    )
+                );
+
+            },
             0
         );
 
@@ -658,16 +851,23 @@ function renderCart() {
     if (cart.length === 0) {
 
         container.innerHTML = `
+
             <div class="cart-empty">
+
                 🛒 السلة فارغة
+
             </div>
+
         `;
+
 
         if (totalElement) {
 
-            totalElement.textContent = "0";
+            totalElement.textContent =
+                "0";
 
         }
+
 
         return;
 
@@ -676,97 +876,127 @@ function renderCart() {
 
     let total = 0;
 
-    container.innerHTML = "";
+
+    let html = "";
 
 
-    cart.forEach((item, index) => {
-
-        const itemTotal =
-            item.price * item.quantity;
-
-        total += itemTotal;
+    cart.forEach(
+        function (item, index) {
 
 
-        container.innerHTML += `
+            const price =
+                Number(
+                    item.price
+                ) || 0;
 
-            <div class="cart-item">
 
-                <div class="cart-item-top">
+            const quantity =
+                Number(
+                    item.quantity
+                ) || 1;
 
-                    <div>
 
-                        <div class="cart-item-name">
-                            ${escapeHTML(item.name)}
+            const lineTotal =
+                price *
+                quantity;
+
+
+            total +=
+                lineTotal;
+
+
+            html += `
+
+                <div class="cart-item">
+
+
+                    <div class="cart-item-top">
+
+
+                        <div>
+
+                            <div
+                                class="cart-item-name"
+                            >
+                                ${escapeHTML(
+                                    item.name
+                                )}
+                            </div>
+
+
+                            <div
+                                class="cart-item-price"
+                            >
+                                ${formatNumber(
+                                    lineTotal
+                                )}
+                                د.ع
+                            </div>
+
                         </div>
 
-                        <div class="cart-item-price">
-                            سعر القطعة:
-                            ${formatNumber(item.price)}
-                            د.ع
-                        </div>
 
                     </div>
 
-                    <strong>
-                        ${formatNumber(itemTotal)}
-                        د.ع
-                    </strong>
+
+                    <div
+                        class="cart-item-actions"
+                    >
+
+
+                        <button
+                            type="button"
+                            class="quantity-button"
+                            onclick="changeQuantity(
+                                ${index},
+                                -1
+                            )"
+                        >
+                            −
+                        </button>
+
+
+                        <strong>
+                            ${quantity}
+                        </strong>
+
+
+                        <button
+                            type="button"
+                            class="quantity-button"
+                            onclick="changeQuantity(
+                                ${index},
+                                1
+                            )"
+                        >
+                            +
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="delete-button"
+                            onclick="removeFromCart(
+                                ${index}
+                            )"
+                        >
+                            حذف
+                        </button>
+
+
+                    </div>
+
 
                 </div>
 
+            `;
 
-                <div
-                    class="cart-item-actions"
-                    style="
-                        display:flex;
-                        align-items:center;
-                        gap:10px;
-                    "
-                >
-
-                    <button
-                        type="button"
-                        class="quantity-button"
-                        onclick="
-                            changeQuantity(${index}, 1)
-                        "
-                    >
-                        +
-                    </button>
+        }
+    );
 
 
-                    <strong>
-                        ${item.quantity}
-                    </strong>
-
-
-                    <button
-                        type="button"
-                        class="quantity-button"
-                        onclick="
-                            changeQuantity(${index}, -1)
-                        "
-                    >
-                        −
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="delete-button"
-                        onclick="
-                            removeFromCart(${index})
-                        "
-                    >
-                        حذف
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-    });
+    container.innerHTML =
+        html;
 
 
     if (totalElement) {
@@ -779,21 +1009,31 @@ function renderCart() {
 }
 
 
-/* =========================
-   تغيير كمية السلة
-========================= */
 
-function changeQuantity(index, change) {
+/* ========================================
+   زيادة / نقصان داخل السلة
+======================================== */
+
+function changeQuantity(
+    index,
+    change
+) {
 
     if (!cart[index]) return;
 
 
-    cart[index].quantity += change;
+    cart[index].quantity +=
+        change;
 
 
-    if (cart[index].quantity <= 0) {
+    if (
+        cart[index].quantity <= 0
+    ) {
 
-        cart.splice(index, 1);
+        cart.splice(
+            index,
+            1
+        );
 
     }
 
@@ -805,16 +1045,21 @@ function changeQuantity(index, change) {
 }
 
 
-/* =========================
-   حذف من السلة
-========================= */
+
+/* ========================================
+   حذف المنتج
+======================================== */
 
 function removeFromCart(index) {
 
     if (!cart[index]) return;
 
 
-    cart.splice(index, 1);
+    cart.splice(
+        index,
+        1
+    );
+
 
     saveCart();
 
@@ -823,9 +1068,68 @@ function removeFromCart(index) {
 }
 
 
-/* =========================
+
+/* ========================================
+   فتح السلة
+======================================== */
+
+function openCart() {
+
+    const overlay =
+        document.getElementById(
+            "cartOverlay"
+        );
+
+
+    if (!overlay) return;
+
+
+    overlay.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+
+/* ========================================
+   إغلاق السلة
+======================================== */
+
+function closeCart(event) {
+
+    if (
+        event &&
+        event.target &&
+        event.target.id !==
+            "cartOverlay"
+    ) {
+
+        return;
+
+    }
+
+
+    const overlay =
+        document.getElementById(
+            "cartOverlay"
+        );
+
+
+    if (!overlay) return;
+
+
+    overlay.classList.add(
+        "hidden"
+    );
+
+}
+
+
+
+/* ========================================
    حفظ السلة
-========================= */
+======================================== */
 
 function saveCart() {
 
@@ -837,118 +1141,39 @@ function saveCart() {
 }
 
 
-/* =========================
-   فتح السلة
-========================= */
 
-function openCart() {
+/* ========================================
+   تنسيق الأرقام
+======================================== */
 
-    const overlay =
-        document.getElementById(
-            "cartOverlay"
-        );
+function formatNumber(number) {
 
-    if (!overlay) return;
-
-    renderCart();
-
-    overlay.classList.remove("hidden");
-
-}
-
-
-/* =========================
-   إغلاق السلة
-========================= */
-
-function closeCart(event) {
-
-    const overlay =
-        document.getElementById(
-            "cartOverlay"
-        );
-
-    if (!overlay) return;
-
-
-    if (
-        !event ||
-        event.target === overlay
-    ) {
-
-        overlay.classList.add("hidden");
-
-    }
-
-}
-
-
-/* =========================
-   إتمام الطلب
-========================= */
-
-function showCheckoutNotice() {
-
-    if (cart.length === 0) {
-
-        alert("السلة فارغة.");
-
-        return;
-
-    }
-
-
-    alert(
-        "السلة جاهزة. سنضيف إتمام الطلب في المرحلة القادمة."
+    return Number(
+        number
+    ).toLocaleString(
+        "en-US"
     );
 
 }
 
 
-/* =========================
-   تنسيق الأرقام
-========================= */
 
-function formatNumber(number) {
-
-    return Number(number)
-        .toLocaleString("en-US");
-
-}
-
-
-/* =========================
-   حماية النصوص
-========================= */
+/* ========================================
+   حماية HTML
+======================================== */
 
 function escapeHTML(text) {
 
-    return String(text)
-
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-/* =========================
-   الانتقال إلى إتمام الطلب
-========================= */
-
-function goToCheckout() {
-
-    if (cart.length === 0) {
-
-        alert(
-            "السلة فارغة، أضف منتجًا واحدًا على الأقل أولاً."
+    const div =
+        document.createElement(
+            "div"
         );
 
-        return;
 
-    }
+    div.textContent =
+        text ?? "";
 
-    window.location.href =
-        "checkout.html";
+
+    return div.innerHTML;
 
 }
