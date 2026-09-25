@@ -77,7 +77,7 @@ let cart =
 
 /*
 ==================================================
-          كمية المنتجات قبل الإضافة
+          كمية المنتج قبل الإضافة للسلة
 ==================================================
 */
 
@@ -95,7 +95,9 @@ document.addEventListener(
     function () {
 
         if (
-            document.getElementById("productsList")
+            document.getElementById(
+                "productsList"
+            )
         ) {
 
             renderCategories();
@@ -106,8 +108,11 @@ document.addEventListener(
 
         }
 
+
         if (
-            document.getElementById("cartItems")
+            document.getElementById(
+                "cartItems"
+            )
         ) {
 
             renderCart();
@@ -120,20 +125,26 @@ document.addEventListener(
 
 /*
 ==================================================
-                 الأقسام
+                 استخراج الأقسام
 ==================================================
 */
 
 function getCategories() {
 
     return [
+
         ...new Set(
+
             products.map(
                 function (product) {
+
                     return product.category;
+
                 }
             )
+
         )
+
     ];
 
 }
@@ -141,7 +152,7 @@ function getCategories() {
 
 /*
 ==================================================
-              عرض الأقسام
+                 عرض الأقسام
 ==================================================
 */
 
@@ -152,9 +163,12 @@ function renderCategories() {
             "categoriesList"
         );
 
+
     if (!container) return;
 
+
     container.innerHTML = "";
+
 
     getCategories().forEach(
         function (category) {
@@ -164,10 +178,14 @@ function renderCategories() {
                     "button"
                 );
 
+
             card.className =
                 "category-card";
 
-            card.type = "button";
+
+            card.type =
+                "button";
+
 
             card.innerHTML = `
 
@@ -181,36 +199,44 @@ function renderCategories() {
 
             `;
 
-            card.onclick = function () {
 
-                const filter =
-                    document.getElementById(
-                        "categoryFilter"
-                    );
+            card.addEventListener(
+                "click",
+                function () {
 
-                if (filter) {
+                    const filter =
+                        document.getElementById(
+                            "categoryFilter"
+                        );
 
-                    filter.value =
-                        category;
 
-                    renderProducts();
+                    if (filter) {
+
+                        filter.value =
+                            category;
+
+                        renderProducts();
+
+                    }
+
+
+                    const productsSection =
+                        document.getElementById(
+                            "products"
+                        );
+
+
+                    if (productsSection) {
+
+                        productsSection.scrollIntoView({
+                            behavior: "smooth"
+                        });
+
+                    }
 
                 }
+            );
 
-                const productsSection =
-                    document.getElementById(
-                        "products"
-                    );
-
-                if (productsSection) {
-
-                    productsSection.scrollIntoView({
-                        behavior: "smooth"
-                    });
-
-                }
-
-            };
 
             container.appendChild(card);
 
@@ -222,7 +248,7 @@ function renderCategories() {
 
 /*
 ==================================================
-             فلتر الأقسام
+              فلتر الأقسام
 ==================================================
 */
 
@@ -233,7 +259,9 @@ function renderCategoryFilter() {
             "categoryFilter"
         );
 
+
     if (!select) return;
+
 
     select.innerHTML = `
 
@@ -243,6 +271,7 @@ function renderCategoryFilter() {
 
     `;
 
+
     getCategories().forEach(
         function (category) {
 
@@ -251,11 +280,14 @@ function renderCategoryFilter() {
                     "option"
                 );
 
+
             option.value =
                 category;
 
+
             option.textContent =
                 category;
+
 
             select.appendChild(option);
 
@@ -278,10 +310,12 @@ function renderProducts() {
             "productsList"
         );
 
+
     const noProducts =
         document.getElementById(
             "noProducts"
         );
+
 
     if (!container) return;
 
@@ -290,6 +324,7 @@ function renderProducts() {
         document.getElementById(
             "searchInput"
         );
+
 
     const categoryFilter =
         document.getElementById(
@@ -320,9 +355,11 @@ function renderProducts() {
                         .toLowerCase()
                         .includes(search);
 
+
                 const matchesCategory =
                     category === "all" ||
                     product.category === category;
+
 
                 return (
                     matchesSearch &&
@@ -336,7 +373,15 @@ function renderProducts() {
     container.innerHTML = "";
 
 
-    if (filtered.length === 0) {
+    /*
+    ==============================
+    لا توجد منتجات
+    ==============================
+    */
+
+    if (
+        filtered.length === 0
+    ) {
 
         if (noProducts) {
 
@@ -360,8 +405,15 @@ function renderProducts() {
     }
 
 
+    /*
+    ==============================
+    إنشاء بطاقات المنتجات
+    ==============================
+    */
+
     filtered.forEach(
         function (product) {
+
 
             /*
             ==============================
@@ -384,7 +436,7 @@ function renderProducts() {
 
             /*
             ==============================
-            إنشاء بطاقة المنتج
+            إنشاء البطاقة
             ==============================
             */
 
@@ -393,26 +445,13 @@ function renderProducts() {
                     "article"
                 );
 
+
             card.className =
                 "product-card";
 
+
             card.style.cursor =
                 "pointer";
-
-
-            /*
-            ==============================
-            الضغط على البطاقة
-            ==============================
-            */
-
-            card.onclick = function () {
-
-                window.location.href =
-                    "product.html?id=" +
-                    product.id;
-
-            };
 
 
             /*
@@ -471,11 +510,12 @@ function renderProducts() {
                     </div>
 
 
-                    <!-- =========================
+                    <!-- ==========================
                          أزرار الكمية
-                    ========================== -->
+                    =========================== -->
 
                     <div
+                        class="product-quantity-controls"
                         style="
                             display:flex;
                             align-items:center;
@@ -486,18 +526,11 @@ function renderProducts() {
                     >
 
 
-                        <!-- زر النقصان -->
+                        <!-- زر ناقص -->
 
                         <button
                             type="button"
-
-                            onclick="
-                                changeProductQuantity(
-                                    ${product.id},
-                                    -1
-                                );
-                                return false;
-                            "
+                            class="product-minus-button"
 
                             style="
                                 width:42px;
@@ -519,7 +552,11 @@ function renderProducts() {
                         <!-- الكمية -->
 
                         <strong
-                            id="productQuantity-${product.id}"
+                            class="product-quantity-number"
+
+                            id="
+                                productQuantity-${product.id}
+                            "
 
                             style="
                                 min-width:35px;
@@ -537,18 +574,11 @@ function renderProducts() {
                         </strong>
 
 
-                        <!-- زر الزيادة -->
+                        <!-- زر زائد -->
 
                         <button
                             type="button"
-
-                            onclick="
-                                changeProductQuantity(
-                                    ${product.id},
-                                    1
-                                );
-                                return false;
-                            "
+                            class="product-plus-button"
 
                             style="
                                 width:42px;
@@ -569,21 +599,13 @@ function renderProducts() {
                     </div>
 
 
-                    <!-- =========================
-                         إضافة إلى السلة
-                    ========================== -->
+                    <!-- ==========================
+                         زر إضافة إلى السلة
+                    =========================== -->
 
                     <button
                         type="button"
-
                         class="add-button"
-
-                        onclick="
-                            addSelectedQuantityToCart(
-                                ${product.id}
-                            );
-                            return false;
-                        "
                     >
 
                         🛒 إضافة إلى السلة
@@ -595,7 +617,166 @@ function renderProducts() {
             `;
 
 
-            container.appendChild(card);
+            /*
+            ==========================================
+            زر +
+            ==========================================
+            */
+
+            const plusButton =
+                card.querySelector(
+                    ".product-plus-button"
+                );
+
+
+            plusButton.addEventListener(
+                "click",
+                function (event) {
+
+                    /*
+                    منع حدث البطاقة
+                    */
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    /*
+                    زيادة الكمية
+                    */
+
+                    changeProductQuantity(
+                        product.id,
+                        1
+                    );
+
+                }
+            );
+
+
+            /*
+            ==========================================
+            زر -
+            ==========================================
+            */
+
+            const minusButton =
+                card.querySelector(
+                    ".product-minus-button"
+                );
+
+
+            minusButton.addEventListener(
+                "click",
+                function (event) {
+
+                    /*
+                    منع حدث البطاقة
+                    */
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    /*
+                    إنقاص الكمية
+                    */
+
+                    changeProductQuantity(
+                        product.id,
+                        -1
+                    );
+
+                }
+            );
+
+
+            /*
+            ==========================================
+            زر إضافة إلى السلة
+            ==========================================
+            */
+
+            const addButton =
+                card.querySelector(
+                    ".add-button"
+                );
+
+
+            addButton.addEventListener(
+                "click",
+                function (event) {
+
+                    /*
+                    منع فتح صفحة المنتج
+                    */
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    /*
+                    إضافة الكمية المحددة
+                    */
+
+                    addSelectedQuantityToCart(
+                        product.id
+                    );
+
+                }
+            );
+
+
+            /*
+            ==========================================
+            الضغط على البطاقة
+            ==========================================
+            */
+
+            card.addEventListener(
+                "click",
+                function (event) {
+
+                    /*
+                    إذا كان الضغط على زر
+                    لا نفتح صفحة المنتج
+                    */
+
+                    if (
+                        event.target.closest(
+                            "button"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /*
+                    فتح صفحة تفاصيل المنتج
+                    */
+
+                    window.location.href =
+                        "product.html?id=" +
+                        product.id;
+
+                }
+            );
+
+
+            /*
+            ==========================================
+            إضافة البطاقة إلى الصفحة
+            ==========================================
+            */
+
+            container.appendChild(
+                card
+            );
 
         }
     );
@@ -614,6 +795,11 @@ function changeProductQuantity(
     change
 ) {
 
+
+    /*
+    إذا لم توجد كمية
+    */
+
     if (
         !productQuantities[
             productId
@@ -627,13 +813,17 @@ function changeProductQuantity(
     }
 
 
+    /*
+    تغيير الكمية
+    */
+
     productQuantities[
         productId
     ] += change;
 
 
     /*
-    منع الكمية من النزول إلى صفر
+    أقل كمية = 1
     */
 
     if (
@@ -650,7 +840,7 @@ function changeProductQuantity(
 
 
     /*
-    تحديث الرقم الظاهر
+    تحديث الرقم على الشاشة
     */
 
     const element =
@@ -674,13 +864,18 @@ function changeProductQuantity(
 
 /*
 ==================================================
-       إضافة الكمية المحددة إلى السلة
+          إضافة الكمية إلى السلة
 ==================================================
 */
 
 function addSelectedQuantityToCart(
     productId
 ) {
+
+
+    /*
+    البحث عن المنتج
+    */
 
     const product =
         products.find(
@@ -698,11 +893,19 @@ function addSelectedQuantityToCart(
     if (!product) return;
 
 
+    /*
+    الحصول على الكمية
+    */
+
     const quantity =
         productQuantities[
             productId
         ] || 1;
 
+
+    /*
+    هل المنتج موجود مسبقًا؟
+    */
 
     const existing =
         cart.find(
@@ -746,13 +949,17 @@ function addSelectedQuantityToCart(
 
 
     /*
-    إعادة الكمية إلى 1
+    إعادة كمية المنتج إلى 1
     */
 
     productQuantities[
         productId
     ] = 1;
 
+
+    /*
+    تحديث الرقم
+    */
 
     const element =
         document.getElementById(
@@ -769,13 +976,25 @@ function addSelectedQuantityToCart(
     }
 
 
+    /*
+    حفظ السلة
+    */
+
     saveCart();
+
+
+    /*
+    تحديث السلة
+    */
 
     renderCart();
 
+
     /*
-    مهم جداً:
-    لا يتم فتح السلة هنا
+    ==========================================
+    مهم جدًا:
+    لا يتم فتح السلة
+    ==========================================
     */
 
 }
@@ -867,10 +1086,12 @@ function renderCart() {
             "cartItems"
         );
 
+
     const count =
         document.getElementById(
             "cartCount"
         );
+
 
     const totalElement =
         document.getElementById(
@@ -883,7 +1104,7 @@ function renderCart() {
 
     /*
     ==============================
-    العدد الكلي
+    حساب عدد القطع
     ==============================
     */
 
@@ -947,11 +1168,12 @@ function renderCart() {
 
     /*
     ==============================
-    المنتجات داخل السلة
+    عرض المنتجات
     ==============================
     */
 
     let total = 0;
+
 
     container.innerHTML = "";
 
@@ -961,6 +1183,7 @@ function renderCart() {
             item,
             index
         ) {
+
 
             const itemTotal =
                 item.price *
@@ -1018,7 +1241,7 @@ function renderCart() {
                     </div>
 
 
-                    <!-- أزرار الكمية -->
+                    <!-- أزرار الكمية داخل السلة -->
 
                     <div
                         class="cart-item-actions"
@@ -1104,7 +1327,7 @@ function renderCart() {
 
     /*
     ==============================
-    الإجمالي
+    عرض الإجمالي
     ==============================
     */
 
@@ -1135,6 +1358,11 @@ function changeQuantity(
     cart[index].quantity +=
         change;
 
+
+    /*
+    إذا وصلت إلى صفر
+    يتم حذف المنتج
+    */
 
     if (
         cart[index].quantity <= 0
