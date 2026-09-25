@@ -77,7 +77,7 @@ let cart =
 
 /*
 ==================================================
-        كمية المنتجات قبل إضافتها للسلة
+          كمية المنتجات قبل الإضافة
 ==================================================
 */
 
@@ -95,9 +95,7 @@ document.addEventListener(
     function () {
 
         if (
-            document.getElementById(
-                "productsList"
-            )
+            document.getElementById("productsList")
         ) {
 
             renderCategories();
@@ -108,11 +106,8 @@ document.addEventListener(
 
         }
 
-
         if (
-            document.getElementById(
-                "cartItems"
-            )
+            document.getElementById("cartItems")
         ) {
 
             renderCart();
@@ -132,19 +127,13 @@ document.addEventListener(
 function getCategories() {
 
     return [
-
         ...new Set(
-
             products.map(
                 function (product) {
-
                     return product.category;
-
                 }
             )
-
         )
-
     ];
 
 }
@@ -331,11 +320,9 @@ function renderProducts() {
                         .toLowerCase()
                         .includes(search);
 
-
                 const matchesCategory =
                     category === "all" ||
                     product.category === category;
-
 
                 return (
                     matchesSearch &&
@@ -349,9 +336,7 @@ function renderProducts() {
     container.innerHTML = "";
 
 
-    if (
-        filtered.length === 0
-    ) {
+    if (filtered.length === 0) {
 
         if (noProducts) {
 
@@ -378,6 +363,11 @@ function renderProducts() {
     filtered.forEach(
         function (product) {
 
+            /*
+            ==============================
+            الكمية الافتراضية
+            ==============================
+            */
 
             if (
                 !productQuantities[
@@ -392,22 +382,28 @@ function renderProducts() {
             }
 
 
+            /*
+            ==============================
+            إنشاء بطاقة المنتج
+            ==============================
+            */
+
             const card =
                 document.createElement(
                     "article"
                 );
 
-
             card.className =
                 "product-card";
-
 
             card.style.cursor =
                 "pointer";
 
 
             /*
+            ==============================
             الضغط على البطاقة
+            ==============================
             */
 
             card.onclick = function () {
@@ -418,6 +414,12 @@ function renderProducts() {
 
             };
 
+
+            /*
+            ==============================
+            محتوى البطاقة
+            ==============================
+            */
 
             card.innerHTML = `
 
@@ -469,7 +471,9 @@ function renderProducts() {
                     </div>
 
 
-                    <!-- الكمية -->
+                    <!-- =========================
+                         أزرار الكمية
+                    ========================== -->
 
                     <div
                         style="
@@ -481,16 +485,18 @@ function renderProducts() {
                         "
                     >
 
+
+                        <!-- زر النقصان -->
+
                         <button
                             type="button"
 
                             onclick="
-                                event.stopPropagation();
-
                                 changeProductQuantity(
                                     ${product.id},
                                     -1
                                 );
+                                return false;
                             "
 
                             style="
@@ -510,10 +516,10 @@ function renderProducts() {
                         </button>
 
 
+                        <!-- الكمية -->
+
                         <strong
-                            id="
-                                productQuantity-${product.id}
-                            "
+                            id="productQuantity-${product.id}"
 
                             style="
                                 min-width:35px;
@@ -531,16 +537,17 @@ function renderProducts() {
                         </strong>
 
 
+                        <!-- زر الزيادة -->
+
                         <button
                             type="button"
 
                             onclick="
-                                event.stopPropagation();
-
                                 changeProductQuantity(
                                     ${product.id},
                                     1
                                 );
+                                return false;
                             "
 
                             style="
@@ -562,7 +569,9 @@ function renderProducts() {
                     </div>
 
 
-                    <!-- إضافة للسلة -->
+                    <!-- =========================
+                         إضافة إلى السلة
+                    ========================== -->
 
                     <button
                         type="button"
@@ -570,11 +579,10 @@ function renderProducts() {
                         class="add-button"
 
                         onclick="
-                            event.stopPropagation();
-
                             addSelectedQuantityToCart(
                                 ${product.id}
                             );
+                            return false;
                         "
                     >
 
@@ -624,6 +632,10 @@ function changeProductQuantity(
     ] += change;
 
 
+    /*
+    منع الكمية من النزول إلى صفر
+    */
+
     if (
         productQuantities[
             productId
@@ -636,6 +648,10 @@ function changeProductQuantity(
 
     }
 
+
+    /*
+    تحديث الرقم الظاهر
+    */
 
     const element =
         document.getElementById(
@@ -658,7 +674,7 @@ function changeProductQuantity(
 
 /*
 ==================================================
-       إضافة الكمية للسلة
+       إضافة الكمية المحددة إلى السلة
 ==================================================
 */
 
@@ -670,7 +686,10 @@ function addSelectedQuantityToCart(
         products.find(
             function (item) {
 
-                return item.id === productId;
+                return (
+                    item.id ===
+                    productId
+                );
 
             }
         );
@@ -689,7 +708,10 @@ function addSelectedQuantityToCart(
         cart.find(
             function (item) {
 
-                return item.id === productId;
+                return (
+                    item.id ===
+                    productId
+                );
 
             }
         );
@@ -741,7 +763,8 @@ function addSelectedQuantityToCart(
 
     if (element) {
 
-        element.textContent = "1";
+        element.textContent =
+            "1";
 
     }
 
@@ -750,12 +773,9 @@ function addSelectedQuantityToCart(
 
     renderCart();
 
-
     /*
-    ==========================================
-    مهم:
-    لا نفتح السلة هنا
-    ==========================================
+    مهم جداً:
+    لا يتم فتح السلة هنا
     */
 
 }
@@ -775,7 +795,10 @@ function addToCart(
         products.find(
             function (item) {
 
-                return item.id === productId;
+                return (
+                    item.id ===
+                    productId
+                );
 
             }
         );
@@ -788,7 +811,10 @@ function addToCart(
         cart.find(
             function (item) {
 
-                return item.id === productId;
+                return (
+                    item.id ===
+                    productId
+                );
 
             }
         );
@@ -825,11 +851,6 @@ function addToCart(
 
     renderCart();
 
-
-    /*
-    لا نفتح السلة
-    */
-
 }
 
 
@@ -846,12 +867,10 @@ function renderCart() {
             "cartItems"
         );
 
-
     const count =
         document.getElementById(
             "cartCount"
         );
-
 
     const totalElement =
         document.getElementById(
@@ -861,6 +880,12 @@ function renderCart() {
 
     if (!container) return;
 
+
+    /*
+    ==============================
+    العدد الكلي
+    ==============================
+    */
 
     const totalQuantity =
         cart.reduce(
@@ -886,6 +911,12 @@ function renderCart() {
 
     }
 
+
+    /*
+    ==============================
+    السلة فارغة
+    ==============================
+    */
 
     if (
         cart.length === 0
@@ -914,8 +945,13 @@ function renderCart() {
     }
 
 
-    let total = 0;
+    /*
+    ==============================
+    المنتجات داخل السلة
+    ==============================
+    */
 
+    let total = 0;
 
     container.innerHTML = "";
 
@@ -931,7 +967,8 @@ function renderCart() {
                 item.quantity;
 
 
-            total += itemTotal;
+            total +=
+                itemTotal;
 
 
             container.innerHTML += `
@@ -991,6 +1028,7 @@ function renderCart() {
                             gap:10px;
                         "
                     >
+
 
                         <button
                             type="button"
@@ -1064,6 +1102,12 @@ function renderCart() {
     );
 
 
+    /*
+    ==============================
+    الإجمالي
+    ==============================
+    */
+
     if (totalElement) {
 
         totalElement.textContent =
@@ -1076,7 +1120,7 @@ function renderCart() {
 
 /*
 ==================================================
-            تغيير الكمية داخل السلة
+          تغيير الكمية داخل السلة
 ==================================================
 */
 
@@ -1168,6 +1212,9 @@ function openCart() {
 
 
     if (!overlay) return;
+
+
+    renderCart();
 
 
     overlay.classList.remove(
