@@ -932,3 +932,23 @@ function escapeHTML(text) {
         .replace(/'/g, "&#039;");
 
 }
+/* =========================
+   الانتقال إلى إتمام الطلب
+========================= */
+
+function goToCheckout() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "السلة فارغة، أضف منتجًا واحدًا على الأقل أولاً."
+        );
+
+        return;
+
+    }
+
+    window.location.href =
+        "checkout.html";
+
+}
